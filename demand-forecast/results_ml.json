@@ -1,0 +1,23 @@
+[
+  {
+    "model": "GBT (calendar+lag+seasonal feat)",
+    "MAE": 12.23,
+    "RMSE": 23.012,
+    "wMAPE": 0.1841,
+    "bias": -2.795
+  },
+  {
+    "model": "SeasonalNaive (bar)",
+    "MAE": 12.725,
+    "RMSE": 23.779,
+    "wMAPE": 0.1915,
+    "bias": -4.33
+  },
+  {
+    "model": "LastWeek (bar)",
+    "MAE": 11.261,
+    "RMSE": 21.178,
+    "wMAPE": 0.1695,
+    "bias": -1.677
+  }
+]

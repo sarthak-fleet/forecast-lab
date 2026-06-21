@@ -1,0 +1,80 @@
+{
+  "QuantileGBT": {
+    "0.5": {
+      "fill_rate": 0.436,
+      "overstock": 3.8,
+      "understock": 5.39,
+      "pinball": 4.592
+    },
+    "0.8": {
+      "fill_rate": 0.585,
+      "overstock": 5.83,
+      "understock": 3.21,
+      "pinball": 3.734
+    },
+    "0.9": {
+      "fill_rate": 0.661,
+      "overstock": 7.08,
+      "understock": 2.49,
+      "pinball": 2.946
+    },
+    "0.95": {
+      "fill_rate": 0.756,
+      "overstock": 9.12,
+      "understock": 1.62,
+      "pinball": 1.997
+    }
+  },
+  "Naive (lag1+resid)": {
+    "0.5": {
+      "fill_rate": 0.583,
+      "overstock": 5.49,
+      "understock": 3.45,
+      "pinball": 4.472
+    },
+    "0.8": {
+      "fill_rate": 0.805,
+      "overstock": 8.24,
+      "understock": 2.2,
+      "pinball": 3.406
+    },
+    "0.9": {
+      "fill_rate": 0.877,
+      "overstock": 11.58,
+      "understock": 1.54,
+      "pinball": 2.541
+    },
+    "0.95": {
+      "fill_rate": 0.92,
+      "overstock": 15.15,
+      "understock": 1.11,
+      "pinball": 1.808
+    }
+  },
+  "Poisson (lag1)": {
+    "0.5": {
+      "fill_rate": 0.583,
+      "overstock": 5.49,
+      "understock": 3.45,
+      "pinball": 4.472
+    },
+    "0.8": {
+      "fill_rate": 0.742,
+      "overstock": 7.73,
+      "understock": 2.31,
+      "pinball": 3.395
+    },
+    "0.9": {
+      "fill_rate": 0.797,
+      "overstock": 9.2,
+      "understock": 1.85,
+      "pinball": 2.587
+    },
+    "0.95": {
+      "fill_rate": 0.835,
+      "overstock": 10.53,
+      "understock": 1.49,
+      "pinball": 1.942
+    }
+  }
+}

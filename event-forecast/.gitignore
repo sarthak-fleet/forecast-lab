@@ -1,0 +1,10 @@
+target/
+.env
+.DS_Store
+.symphony/
+
+# downloaded datasets (large, re-fetchable) — keep converter scripts, not the data
+data/nyc-taxi/
+data/olist/
+data/nyc-taxi-events.json
+data/olist-sp-events.json

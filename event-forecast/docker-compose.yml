@@ -1,0 +1,14 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    ports:
+      - "54329:5432"
+    environment:
+      POSTGRES_DB: event_forecast
+      POSTGRES_USER: event_forecast
+      POSTGRES_PASSWORD: event_forecast
+    volumes:
+      - event_forecast_timescale:/var/lib/postgresql/data
+
+volumes:
+  event_forecast_timescale:

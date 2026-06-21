@@ -1,0 +1,74 @@
+[
+  {
+    "users": 6040,
+    "Recall@10": 0.2151,
+    "NDCG@10": 0.1088,
+    "Coverage@10": 0.6668,
+    "Recall@20": 0.3353,
+    "NDCG@20": 0.1392,
+    "Coverage@20": 0.7569,
+    "MRR": 0.094,
+    "model": "SASRec (2 blocks, d=64)",
+    "fit_s": 306.5
+  },
+  {
+    "users": 6040,
+    "Recall@10": 0.1637,
+    "NDCG@10": 0.0824,
+    "Coverage@10": 0.7329,
+    "Recall@20": 0.2493,
+    "NDCG@20": 0.1039,
+    "Coverage@20": 0.8413,
+    "MRR": 0.0736,
+    "model": "Markov (1st-order)",
+    "fit_s": 0.1
+  },
+  {
+    "users": 6040,
+    "Recall@10": 0.0745,
+    "NDCG@10": 0.04,
+    "Coverage@10": 0.1379,
+    "Recall@20": 0.1114,
+    "NDCG@20": 0.0493,
+    "Coverage@20": 0.1873,
+    "MRR": 0.0384,
+    "model": "ItemKNN (cosine, k=100)",
+    "fit_s": 1.7
+  },
+  {
+    "users": 6040,
+    "Recall@10": 0.0735,
+    "NDCG@10": 0.036,
+    "Coverage@10": 0.5065,
+    "Recall@20": 0.1263,
+    "NDCG@20": 0.0493,
+    "Coverage@20": 0.5831,
+    "MRR": 0.0362,
+    "model": "BPR (f=64, epochs=120)",
+    "fit_s": 157.5
+  },
+  {
+    "users": 6040,
+    "Recall@10": 0.071,
+    "NDCG@10": 0.0341,
+    "Coverage@10": 0.6282,
+    "Recall@20": 0.1315,
+    "NDCG@20": 0.0493,
+    "Coverage@20": 0.6797,
+    "MRR": 0.0352,
+    "model": "ALS (f=64, iters=15, a=40)",
+    "fit_s": 354.3
+  },
+  {
+    "users": 6040,
+    "Recall@10": 0.0437,
+    "NDCG@10": 0.0223,
+    "Coverage@10": 0.0534,
+    "Recall@20": 0.0719,
+    "NDCG@20": 0.0294,
+    "Coverage@20": 0.0761,
+    "MRR": 0.0231,
+    "model": "Popularity",
+    "fit_s": 0.2
+  }
+]

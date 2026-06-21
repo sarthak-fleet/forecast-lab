@@ -1,0 +1,30 @@
+[
+  {
+    "MAE": 11.261,
+    "RMSE": 21.178,
+    "wMAPE": 0.1695,
+    "bias": -1.677,
+    "model": "LastWeek (lag 168h)"
+  },
+  {
+    "MAE": 12.725,
+    "RMSE": 23.779,
+    "wMAPE": 0.1915,
+    "bias": -4.33,
+    "model": "SeasonalNaive (zone x dow x hod)"
+  },
+  {
+    "MAE": 41.021,
+    "RMSE": 65.968,
+    "wMAPE": 0.6174,
+    "bias": -4.734,
+    "model": "ZoneMean"
+  },
+  {
+    "MAE": 62.687,
+    "RMSE": 86.3,
+    "wMAPE": 0.9435,
+    "bias": -4.734,
+    "model": "GlobalMean"
+  }
+]

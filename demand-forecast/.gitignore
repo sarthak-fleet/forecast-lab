@@ -1,0 +1,6 @@
+# datasets (public, large — never commit; re-download via the run scripts)
+data/
+# python
+__pycache__/
+*.pyc
+.DS_Store

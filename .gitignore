@@ -1,0 +1,8 @@
+# defense-in-depth (subfolders also have their own .gitignore)
+**/data/
+**/target/
+**/__pycache__/
+**/.DS_Store
+*.zip
+*.tgz
+*.parquet

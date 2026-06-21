@@ -1,0 +1,30 @@
+[
+  {
+    "model": "GBT (region\u00d7type\u00d7week, Poisson)",
+    "MAE": 9.68,
+    "RMSE": 19.807,
+    "wMAPE": 0.4496,
+    "bias": -2.882
+  },
+  {
+    "model": "LastWeek (lag1)",
+    "MAE": 8.943,
+    "RMSE": 17.36,
+    "wMAPE": 0.4154,
+    "bias": 2.045
+  },
+  {
+    "model": "MA4 (mean last 4 wks)",
+    "MAE": 10.268,
+    "RMSE": 21.987,
+    "wMAPE": 0.4769,
+    "bias": 1.928
+  },
+  {
+    "model": "GroupMean (static)",
+    "MAE": 10.906,
+    "RMSE": 22.236,
+    "wMAPE": 0.5065,
+    "bias": -4.847
+  }
+]

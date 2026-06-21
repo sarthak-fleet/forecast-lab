@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Event Forecast Explorer</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-K1RAMLEX3t/EmytDbUTCN0WUdXsv9xFliJqt/s3IPXk="
+      crossorigin=""
+    />
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, sans-serif; color: #1f2937; background: #f9fafb; }
+      header { padding: 16px 20px; background: #111827; color: #f9fafb; }
+      header h1 { margin: 0; font-size: 20px; }
+      header p { margin: 4px 0 0; font-size: 13px; color: #9ca3af; }
+      main { display: grid; grid-template-columns: 380px 1fr; gap: 16px; padding: 16px; min-height: calc(100vh - 76px); }
+      .panel { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow: auto; }
+      #map { height: calc(100vh - 110px); border-radius: 8px; border: 1px solid #e5e7eb; }
+      label { font-size: 13px; color: #374151; display: flex; flex-direction: column; gap: 4px; }
+      input[type="number"], textarea, input[type="text"], input[type="range"] { width: 100%; padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 6px; font: inherit; }
+      textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+      button { padding: 8px 12px; border: 0; border-radius: 6px; background: #2563eb; color: #fff; font-weight: 600; cursor: pointer; }
+      button.secondary { background: #e5e7eb; color: #1f2937; }
+      button:disabled { opacity: 0.5; cursor: not-allowed; }
+      .toggles { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+      .toggles label { flex-direction: row; align-items: center; gap: 6px; }
+      .legend { display: flex; gap: 12px; font-size: 12px; color: #6b7280; }
+      .legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 4px; vertical-align: middle; }
+      .dot.observed { background: #2563eb; }
+      .dot.predicted { background: #f97316; }
+      h2 { margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: #6b7280; }
+      ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+      li.step { padding: 8px 10px; background: #f3f4f6; border-radius: 6px; font-size: 13px; }
+      li.step .event { font-weight: 600; color: #111827; }
+      li.step .meta { color: #6b7280; font-size: 12px; }
+      .bar { height: 4px; background: #e5e7eb; border-radius: 2px; margin-top: 4px; overflow: hidden; }
+      .bar > div { height: 100%; background: #2563eb; }
+      .narrative { font-size: 13px; line-height: 1.5; color: #111827; background: #fef3c7; padding: 10px; border-radius: 6px; }
+      .error { background: #fee2e2; color: #b91c1c; padding: 8px 10px; border-radius: 6px; font-size: 13px; }
+      .hint { font-size: 12px; color: #6b7280; }
+      .zone-list { display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+      .zone-list span.up { color: #16a34a; }
+      .zone-list span.down { color: #dc2626; }
+      .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .metric { background: #f3f4f6; border-radius: 6px; padding: 8px 10px; font-size: 12px; }
+      .metric .label { color: #6b7280; margin-bottom: 2px; }
+      .metric .value { font-size: 16px; font-weight: 700; color: #111827; }
+      .quality-headline { font-size: 12px; color: #374151; margin-top: 4px; }
+      .alert-list { display: flex; flex-direction: column; gap: 6px; }
+      .alert { font-size: 12px; padding: 8px 10px; border-radius: 6px; border-left: 4px solid #d1d5db; background: #f9fafb; }
+      .alert.critical { border-left-color: #dc2626; background: #fef2f2; }
+      .alert.warning { border-left-color: #f97316; background: #fff7ed; }
+      .alert.info { border-left-color: #2563eb; background: #eff6ff; }
+      .replay-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .replay-controls label { flex: 1; min-width: 120px; }
+      .replay-meta { font-size: 12px; color: #6b7280; }
+      .drift-list { font-size: 12px; color: #7c3aed; display: flex; flex-direction: column; gap: 4px; }
+      .unplotted { font-size: 12px; color: #6b7280; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Event Forecast Explorer</h1>
+      <p>Map, alerts, replay playback, and held-out forecast quality from /action-report and /replay.</p>
+    </header>
+    <main>
+      <section class="panel" id="controls">
+        <h2>Stream</h2>
+        <button id="load-sample" class="secondary">Load sample stream</button>
+        <label>
+          Events JSON
+          <textarea id="events-input" spellcheck="false" placeholder='[ {"ts":"...","event_type":"...","properties":{"location":"..."}} ]'></textarea>
+        </label>
+        <label>
+          Horizon
+          <input id="horizon-input" type="number" min="1" max="50" value="6" />
+        </label>
+        <div class="toggles">
+          <label><input type="checkbox" id="show-observed" checked /> <span><span class="dot observed"></span>Observed</span></label>
+          <label><input type="checkbox" id="show-predicted" checked /> <span><span class="dot predicted"></span>Predicted</span></label>
+          <label><input type="checkbox" id="replay-mode" /> Replay mode</label>
+        </div>
+        <button id="run">Run forecast</button>
+        <div id="error" class="error" hidden></div>
+
+        <h2>Replay</h2>
+        <div class="replay-controls">
+          <label>Window (min)<input id="window-minutes" type="number" min="1" value="30" /></label>
+          <label>Step (min)<input id="step-minutes" type="number" min="1" value="15" /></label>
+        </div>
+        <div class="replay-controls">
+          <button id="replay-play" class="secondary" disabled>Play</button>
+          <button id="replay-pause" class="secondary" disabled>Pause</button>
+          <button id="replay-back" class="secondary" disabled>Step back</button>
+          <button id="replay-forward" class="secondary" disabled>Step forward</button>
+        </div>
+        <label>
+          Scrub
+          <input id="replay-scrub" type="range" min="0" max="0" value="0" disabled />
+        </label>
+        <div id="replay-meta" class="replay-meta">Enable replay mode to step through the stream.</div>
+        <div id="drift-list" class="drift-list"></div>
+
+        <h2>Alerts</h2>
+        <div id="alerts" class="alert-list"><div class="hint">Run a forecast to evaluate alert rules.</div></div>
+
+        <h2>Forecast quality</h2>
+        <div id="quality" class="metrics">
+          <div class="metric"><div class="label">Event-type accuracy</div><div class="value">—</div></div>
+          <div class="metric"><div class="label">Location accuracy</div><div class="value">—</div></div>
+          <div class="metric"><div class="label">Median timestamp error</div><div class="value">—</div></div>
+          <div class="metric"><div class="label">Mean confidence</div><div class="value">—</div></div>
+        </div>
+        <div id="quality-headline" class="quality-headline">Run a forecast to score held-out quality.</div>
+
+        <h2>Next stream</h2>
+        <ul id="next-stream"></ul>
+
+        <h2>What changed / what to do next</h2>
+        <div id="narrative" class="narrative">Run a forecast to see the report.</div>
+        <div class="zone-list" id="zones"></div>
+        <div id="unplotted" class="unplotted"></div>
+      </section>
+      <section id="map"></section>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script>
+      const map = L.map("map").setView([12.9416, 77.6577], 12);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+
+      const observedLayer = L.layerGroup().addTo(map);
+      const predictedLayer = L.layerGroup().addTo(map);
+
+      let replayPlayback = null;
+      let replayIndex = 0;
+      let replayTimer = null;
+      let lastLocations = {};
+
+      async function loadSample() {
+        const res = await fetch("/sample-events.json");
+        if (!res.ok) throw new Error("could not load sample events");
+        return await res.json();
+      }
+
+      function setError(message) {
+        const el = document.getElementById("error");
+        if (!message) { el.hidden = true; el.textContent = ""; return; }
+        el.hidden = false; el.textContent = message;
+      }
+
+      function pct(value) {
+        return `${Math.round(value * 100)}%`;
+      }
+
+      function bucketCoords(bucket, locations) {
+        const meta = locations?.[bucket];
+        if (meta?.lat != null && meta?.lng != null) return [meta.lat, meta.lng];
+        return null;
+      }
+
+      function drawHeatmap(rows, layer, color, locations) {
+        layer.clearLayers();
+        const totals = {};
+        const unplotted = new Set();
+        for (const row of rows) {
+          if (!totals[row.bucket]) totals[row.bucket] = 0;
+          totals[row.bucket] += layer === observedLayer ? row.observed_count : row.predicted_count;
+        }
+        for (const [bucket, count] of Object.entries(totals)) {
+          if (count <= 0) continue;
+          const coords = bucketCoords(bucket, locations);
+          if (!coords) {
+            unplotted.add(bucket);
+            continue;
+          }
+          const circle = L.circleMarker(coords, {
+            radius: 8 + Math.min(count * 4, 30),
+            color,
+            weight: 1,
+            fillColor: color,
+            fillOpacity: 0.4,
+          });
+          const label = locations?.[bucket]?.label || bucket;
+          circle.bindTooltip(`${label}: ${count}`);
+          circle.addTo(layer);
+        }
+        return [...unplotted];
+      }
+
+      function fitMapToLocations(locations) {
+        const coords = Object.values(locations || {})
+          .filter((meta) => meta.lat != null && meta.lng != null)
+          .map((meta) => [meta.lat, meta.lng]);
+        if (coords.length > 0) {
+          map.fitBounds(coords, { padding: [24, 24], maxZoom: 13 });
+        }
+      }
+
+      function renderAlerts(alerts) {
+        const container = document.getElementById("alerts");
+        if (!alerts?.length) {
+          container.innerHTML = '<div class="hint">No alerts under the quiet default profile.</div>';
+          return;
+        }
+        container.innerHTML = "";
+        for (const alert of alerts) {
+          const div = document.createElement("div");
+          div.className = `alert ${alert.severity}`;
+          div.innerHTML = `<strong>${alert.kind.replaceAll("_", " ")}</strong> · ${alert.reason}`;
+          container.appendChild(div);
+        }
+      }
+
+      function renderNextStream(predictions) {
+        const list = document.getElementById("next-stream");
+        list.innerHTML = "";
+        for (const step of predictions || []) {
+          const li = document.createElement("li");
+          li.className = "step";
+          const props = Object.entries(step.properties || {})
+            .map(([k, v]) => `${k}=${v.value ?? v}`)
+            .join(" · ");
+          li.innerHTML = `
+            <div class="event">${step.step}. ${step.event_type}</div>
+            <div class="meta">${new Date(step.expected_ts).toLocaleString()} · conf ${step.confidence}</div>
+            <div class="meta">${props}</div>
+            <div class="bar"><div style="width:${Math.round(step.confidence * 100)}%"></div></div>
+          `;
+          list.appendChild(li);
+        }
+      }
+
+      function renderQuality(quality) {
+        const grid = document.getElementById("quality");
+        const headline = document.getElementById("quality-headline");
+        if (!quality) {
+          grid.innerHTML = `
+            <div class="metric"><div class="label">Event-type accuracy</div><div class="value">—</div></div>
+            <div class="metric"><div class="label">Location accuracy</div><div class="value">—</div></div>
+            <div class="metric"><div class="label">Median timestamp error</div><div class="value">—</div></div>
+            <div class="metric"><div class="label">Mean confidence</div><div class="value">—</div></div>
+          `;
+          headline.textContent = "Need at least 4 events for held-out quality scoring.";
+          return;
+        }
+        const location = quality.property_accuracy?.location?.accuracy ?? 0;
+        const medianSec = Math.round(quality.timestamp_error.median_ms / 1000);
+        grid.innerHTML = `
+          <div class="metric"><div class="label">Event-type accuracy</div><div class="value">${pct(quality.event_type_accuracy)}</div></div>
+          <div class="metric"><div class="label">Location accuracy</div><div class="value">${pct(location)}</div></div>
+          <div class="metric"><div class="label">Median timestamp error</div><div class="value">${medianSec}s</div></div>
+          <div class="metric"><div class="label">Mean confidence</div><div class="value">${pct(quality.uncertainty.mean_event_confidence)}</div></div>
+        `;
+        headline.textContent = quality.headline;
+      }
+
+      function renderDecision(report) {
+        document.getElementById("narrative").textContent = report?.narrative || "No decision report.";
+        renderQuality(report?.forecast_quality);
+        const zones = document.getElementById("zones");
+        zones.innerHTML = "";
+        for (const z of report?.hot_zones || []) {
+          const row = document.createElement("div");
+          row.innerHTML = `<span class="up">▲</span> ${z.value} +${Math.round(z.delta * 100)}%`;
+          zones.appendChild(row);
+        }
+        for (const z of report?.cooling_zones || []) {
+          const row = document.createElement("div");
+          row.innerHTML = `<span class="down">▼</span> ${z.value} ${Math.round(z.delta * 100)}%`;
+          zones.appendChild(row);
+        }
+      }
+
+      function renderUnplotted(buckets) {
+        const el = document.getElementById("unplotted");
+        if (!buckets?.length) {
+          el.textContent = "";
+          return;
+        }
+        el.textContent = `Buckets without coordinates: ${buckets.join(", ")}`;
+      }
+
+      function setReplayControls(enabled, totalSteps) {
+        const scrub = document.getElementById("replay-scrub");
+        scrub.disabled = !enabled;
+        scrub.max = Math.max(totalSteps - 1, 0);
+        scrub.value = replayIndex;
+        for (const id of ["replay-play", "replay-pause", "replay-back", "replay-forward"]) {
+          document.getElementById(id).disabled = !enabled;
+        }
+      }
+
+      function renderReplayStep(step) {
+        if (!step) return;
+        lastLocations = step.heatmap?.locations || {};
+        const observedUnplotted = drawHeatmap(
+          step.heatmap.rows,
+          observedLayer,
+          "#2563eb",
+          lastLocations
+        );
+        const predictedUnplotted = drawHeatmap(
+          step.heatmap.rows,
+          predictedLayer,
+          "#f97316",
+          lastLocations
+        );
+        const unplotted = [...new Set([...observedUnplotted, ...predictedUnplotted])];
+        renderUnplotted(unplotted);
+        fitMapToLocations(lastLocations);
+        renderNextStream(step.predictions);
+        renderDecision(step.decision);
+        renderAlerts(step.alerts?.alerts || []);
+        const drift = document.getElementById("drift-list");
+        drift.innerHTML = "";
+        for (const marker of step.drift_markers || []) {
+          const row = document.createElement("div");
+          row.textContent = `${marker.kind}: ${marker.reason}`;
+          drift.appendChild(row);
+        }
+        document.getElementById("replay-meta").textContent =
+          `Step ${step.index + 1}/${replayPlayback.total_steps} · ` +
+          `${new Date(step.window_start).toLocaleString()} → ${new Date(step.window_end).toLocaleString()} · ` +
+          `${step.observed_event_count} observed / ${step.history_event_count} history`;
+      }
+
+      function showReplayIndex(index) {
+        if (!replayPlayback?.steps?.length) return;
+        replayIndex = Math.max(0, Math.min(index, replayPlayback.steps.length - 1));
+        document.getElementById("replay-scrub").value = replayIndex;
+        renderReplayStep(replayPlayback.steps[replayIndex]);
+      }
+
+      function stopReplayTimer() {
+        if (replayTimer) {
+          clearInterval(replayTimer);
+          replayTimer = null;
+        }
+      }
+
+      function startReplayTimer() {
+        stopReplayTimer();
+        replayTimer = setInterval(() => {
+          if (!replayPlayback) return;
+          if (replayIndex >= replayPlayback.steps.length - 1) {
+            stopReplayTimer();
+            return;
+          }
+          showReplayIndex(replayIndex + 1);
+        }, 1200);
+      }
+
+      async function postJson(path, body) {
+        const res = await fetch(path, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) throw new Error(`${path} ${res.status}: ${await res.text()}`);
+        return await res.json();
+      }
+
+      async function runForecast() {
+        setError("");
+        stopReplayTimer();
+        const horizon = parseInt(document.getElementById("horizon-input").value, 10) || 6;
+        const replayMode = document.getElementById("replay-mode").checked;
+        const windowMinutes = parseInt(document.getElementById("window-minutes").value, 10) || 30;
+        const stepMinutes = parseInt(document.getElementById("step-minutes").value, 10) || 15;
+        const text = document.getElementById("events-input").value.trim();
+        let events;
+        try {
+          events = JSON.parse(text);
+        } catch (e) {
+          setError("events JSON is invalid");
+          return;
+        }
+        try {
+          if (replayMode) {
+            replayPlayback = await postJson("/replay", {
+              events,
+              horizon,
+              history_ratio: 0.6,
+              window_minutes: windowMinutes,
+              step_minutes: stepMinutes,
+            });
+            replayIndex = 0;
+            setReplayControls(true, replayPlayback.total_steps);
+            showReplayIndex(0);
+            return;
+          }
+
+          replayPlayback = null;
+          setReplayControls(false, 0);
+          document.getElementById("drift-list").innerHTML = "";
+          document.getElementById("replay-meta").textContent = "Replay mode off — showing full-stream action report.";
+
+          const action = await postJson("/action-report", { events, horizon, history_ratio: 0.6 });
+          lastLocations = action.heatmap.locations || {};
+          const showObserved = document.getElementById("show-observed").checked;
+          const showPredicted = document.getElementById("show-predicted").checked;
+          let unplotted = [];
+          if (showObserved) {
+            unplotted = drawHeatmap(action.heatmap.rows, observedLayer, "#2563eb", lastLocations);
+          } else {
+            observedLayer.clearLayers();
+          }
+          if (showPredicted) {
+            const predictedUnplotted = drawHeatmap(action.heatmap.rows, predictedLayer, "#f97316", lastLocations);
+            unplotted = [...new Set([...unplotted, ...predictedUnplotted])];
+          } else {
+            predictedLayer.clearLayers();
+          }
+          renderUnplotted(unplotted);
+          fitMapToLocations(lastLocations);
+          renderNextStream(action.predictions);
+          renderDecision(action.decision);
+          renderAlerts(action.alerts?.alerts || []);
+        } catch (e) {
+          setError(e.message);
+        }
+      }
+
+      async function loadAndRun() {
+        try {
+          const events = await loadSample();
+          document.getElementById("events-input").value = JSON.stringify(events, null, 2);
+          await runForecast();
+        } catch (e) {
+          setError(e.message);
+        }
+      }
+
+      document.getElementById("load-sample").addEventListener("click", loadAndRun);
+      if (new URLSearchParams(location.search).has("demo")) {
+        window.addEventListener("load", () => setTimeout(loadAndRun, 500));
+      }
+      document.getElementById("run").addEventListener("click", runForecast);
+      ["show-observed", "show-predicted", "replay-mode"].forEach((id) => {
+        document.getElementById(id).addEventListener("change", runForecast);
+      });
+      document.getElementById("replay-play").addEventListener("click", startReplayTimer);
+      document.getElementById("replay-pause").addEventListener("click", stopReplayTimer);
+      document.getElementById("replay-back").addEventListener("click", () => showReplayIndex(replayIndex - 1));
+      document.getElementById("replay-forward").addEventListener("click", () => showReplayIndex(replayIndex + 1));
+      document.getElementById("replay-scrub").addEventListener("input", (event) => {
+        showReplayIndex(parseInt(event.target.value, 10) || 0);
+      });
+    </script>
+  </body>
+</html>

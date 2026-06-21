@@ -1,0 +1,32 @@
+[
+  {
+    "id": "geo_1",
+    "ts": "2026-06-03T10:00:00Z",
+    "event_type": "order_created",
+    "properties": {
+      "location": "site-a",
+      "lat": 51.5074,
+      "lng": -0.1278
+    }
+  },
+  {
+    "id": "geo_2",
+    "ts": "2026-06-03T10:05:00Z",
+    "event_type": "driver_assigned",
+    "properties": {
+      "location": "site-b",
+      "lat": 51.5155,
+      "lng": -0.0923
+    }
+  },
+  {
+    "id": "geo_3",
+    "ts": "2026-06-03T10:12:00Z",
+    "event_type": "order_picked_up",
+    "properties": {
+      "location": "site-a",
+      "lat": 51.5074,
+      "lng": -0.1278
+    }
+  }
+]

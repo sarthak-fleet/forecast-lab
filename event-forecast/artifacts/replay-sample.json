@@ -1,0 +1,1970 @@
+{
+  "window_minutes": 30,
+  "step_minutes": 15,
+  "horizon": 4,
+  "total_steps": 5,
+  "steps": [
+    {
+      "index": 0,
+      "window_start": "2026-06-03T09:00:00Z",
+      "window_end": "2026-06-03T09:30:00Z",
+      "observed_event_count": 4,
+      "history_event_count": 5,
+      "heatmap": {
+        "bucket_field": "location",
+        "window_minutes": 30,
+        "horizon": 4,
+        "rows": [
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T09:00:00Z",
+            "observed_count": 2,
+            "predicted_count": 0,
+            "delta": -2,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T09:00:00Z",
+            "observed_count": 1,
+            "predicted_count": 0,
+            "delta": -1,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T09:30:00Z",
+            "observed_count": 0,
+            "predicted_count": 2,
+            "delta": 2,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T09:30:00Z",
+            "observed_count": 1,
+            "predicted_count": 1,
+            "delta": 0,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 0,
+            "predicted_count": 1,
+            "delta": 1,
+            "mean_confidence": 1.0
+          }
+        ],
+        "hot_buckets": [],
+        "cooling_buckets": [],
+        "locations": {
+          "indiranagar": {
+            "bucket": "indiranagar",
+            "label": "indiranagar",
+            "lat": 12.9719,
+            "lng": 77.6412,
+            "source": "catalog"
+          },
+          "koramangala": {
+            "bucket": "koramangala",
+            "label": "koramangala",
+            "lat": 12.9352,
+            "lng": 77.6245,
+            "source": "catalog"
+          }
+        }
+      },
+      "decision": {
+        "horizon": 4,
+        "narrative": "current window holds 3 events vs 2 events in the prior window; indiranagar is heating up (+67%); koramangala is cooling (-67%); next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix; held-out quality: 0% event-type, 0% location, median timestamp error 300s",
+        "previous_window": {
+          "start": "2026-06-03T09:00:00Z",
+          "end": "2026-06-03T09:04:00Z",
+          "event_count": 2
+        },
+        "current_window": {
+          "start": "2026-06-03T09:12:00Z",
+          "end": "2026-06-03T09:30:00Z",
+          "event_count": 3
+        },
+        "hot_zones": [
+          {
+            "field": "location",
+            "value": "indiranagar",
+            "previous_share": 0.0,
+            "current_share": 0.667,
+            "delta": 0.667
+          }
+        ],
+        "cooling_zones": [
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 1.0,
+            "current_share": 0.333,
+            "delta": -0.667
+          }
+        ],
+        "mix_shifts": [
+          {
+            "field": "location",
+            "value": "indiranagar",
+            "previous_share": 0.0,
+            "current_share": 0.667,
+            "delta": 0.667
+          },
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 1.0,
+            "current_share": 0.333,
+            "delta": -0.667
+          },
+          {
+            "field": "product_type",
+            "value": "food",
+            "previous_share": 0.0,
+            "current_share": 0.333,
+            "delta": 0.333
+          },
+          {
+            "field": "product_type",
+            "value": "grocery",
+            "previous_share": 1.0,
+            "current_share": 0.667,
+            "delta": -0.333
+          }
+        ],
+        "forecast_headline": "next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix",
+        "low_confidence_steps": [],
+        "forecast_quality": {
+          "history_count": 3,
+          "future_count": 2,
+          "history_ratio": 0.6,
+          "event_type_accuracy": 0.0,
+          "property_accuracy": {
+            "location": {
+              "correct": 0,
+              "scored": 2,
+              "accuracy": 0.0
+            },
+            "service_type": {
+              "correct": 2,
+              "scored": 2,
+              "accuracy": 1.0
+            },
+            "product_type": {
+              "correct": 1,
+              "scored": 2,
+              "accuracy": 0.5
+            }
+          },
+          "timestamp_error": {
+            "mean_ms": 300000.0,
+            "median_ms": 300000.0
+          },
+          "uncertainty": {
+            "mean_event_confidence": 0.667,
+            "mean_property_confidence": 0.946
+          },
+          "headline": "held-out quality: 0% event-type, 0% location, median timestamp error 300s"
+        }
+      },
+      "predictions": [
+        {
+          "step": 1,
+          "event_type": "driver_assigned",
+          "expected_ts": "2026-06-03T09:34:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.815,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "product_type": {
+              "value": "grocery",
+              "confidence": 0.952,
+              "why": "property distribution for order_created->driver_assigned"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_created",
+            "interval_ms": 240000
+          }
+        },
+        {
+          "step": 2,
+          "event_type": "order_picked_up",
+          "expected_ts": "2026-06-03T09:42:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "product_type": {
+              "value": "grocery",
+              "confidence": 0.879,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.778,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            }
+          },
+          "why": {
+            "event_type": "transition from driver_assigned",
+            "interval_ms": 480000
+          }
+        },
+        {
+          "step": 3,
+          "event_type": "order_delivered",
+          "expected_ts": "2026-06-03T09:54:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.778,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "product_type": {
+              "value": "grocery",
+              "confidence": 0.879,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for order_picked_up->order_delivered"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_picked_up",
+            "interval_ms": 720000
+          }
+        },
+        {
+          "step": 4,
+          "event_type": "order_created",
+          "expected_ts": "2026-06-03T10:00:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "product_type": {
+              "value": "food",
+              "confidence": 0.526,
+              "why": "property distribution for order_delivered->order_created"
+            },
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.844,
+              "why": "property distribution for order_delivered->order_created"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for order_delivered->order_created"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_delivered",
+            "interval_ms": 360000
+          }
+        }
+      ],
+      "drift_markers": [
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted 67% toward indiranagar"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted -67% toward koramangala"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted 33% toward food"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted -33% toward grocery"
+        }
+      ],
+      "alerts": {
+        "profile": "quiet",
+        "alerts": [
+          {
+            "kind": "cooling_zone_collapse",
+            "severity": "warning",
+            "reason": "koramangala cooling -67% in observed window",
+            "window": "observed",
+            "value": "koramangala",
+            "metric": -0.667
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "warning",
+            "reason": "indiranagar heating up 67% in observed window",
+            "window": "observed",
+            "value": "indiranagar",
+            "metric": 0.667
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted 33% toward food",
+            "window": "observed",
+            "value": "food",
+            "metric": 0.333
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted -33% toward grocery",
+            "window": "observed",
+            "value": "grocery",
+            "metric": -0.333
+          }
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "window_start": "2026-06-03T09:15:00Z",
+      "window_end": "2026-06-03T09:45:00Z",
+      "observed_event_count": 4,
+      "history_event_count": 7,
+      "heatmap": {
+        "bucket_field": "location",
+        "window_minutes": 30,
+        "horizon": 4,
+        "rows": [
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T09:00:00Z",
+            "observed_count": 1,
+            "predicted_count": 0,
+            "delta": -1,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T09:30:00Z",
+            "observed_count": 1,
+            "predicted_count": 1,
+            "delta": 0,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T09:30:00Z",
+            "observed_count": 2,
+            "predicted_count": 0,
+            "delta": -2,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 0,
+            "predicted_count": 1,
+            "delta": 1,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 0,
+            "predicted_count": 2,
+            "delta": 2,
+            "mean_confidence": 1.0
+          }
+        ],
+        "hot_buckets": [],
+        "cooling_buckets": [],
+        "locations": {
+          "indiranagar": {
+            "bucket": "indiranagar",
+            "label": "indiranagar",
+            "lat": 12.9719,
+            "lng": 77.6412,
+            "source": "catalog"
+          },
+          "koramangala": {
+            "bucket": "koramangala",
+            "label": "koramangala",
+            "lat": 12.9352,
+            "lng": 77.6245,
+            "source": "catalog"
+          }
+        }
+      },
+      "decision": {
+        "horizon": 4,
+        "narrative": "current window holds 4 events vs 3 events in the prior window; indiranagar is heating up (+17%); koramangala is cooling (-17%); next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix; held-out quality: 0% event-type, 67% location, median timestamp error 360s",
+        "previous_window": {
+          "start": "2026-06-03T09:00:00Z",
+          "end": "2026-06-03T09:12:00Z",
+          "event_count": 3
+        },
+        "current_window": {
+          "start": "2026-06-03T09:24:00Z",
+          "end": "2026-06-03T09:42:00Z",
+          "event_count": 4
+        },
+        "hot_zones": [
+          {
+            "field": "location",
+            "value": "indiranagar",
+            "previous_share": 0.333,
+            "current_share": 0.5,
+            "delta": 0.167
+          }
+        ],
+        "cooling_zones": [
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.667,
+            "current_share": 0.5,
+            "delta": -0.167
+          }
+        ],
+        "mix_shifts": [
+          {
+            "field": "product_type",
+            "value": "food",
+            "previous_share": 0.0,
+            "current_share": 0.75,
+            "delta": 0.75
+          },
+          {
+            "field": "product_type",
+            "value": "grocery",
+            "previous_share": 1.0,
+            "current_share": 0.25,
+            "delta": -0.75
+          },
+          {
+            "field": "location",
+            "value": "indiranagar",
+            "previous_share": 0.333,
+            "current_share": 0.5,
+            "delta": 0.167
+          },
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.667,
+            "current_share": 0.5,
+            "delta": -0.167
+          }
+        ],
+        "forecast_headline": "next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix",
+        "low_confidence_steps": [],
+        "forecast_quality": {
+          "history_count": 4,
+          "future_count": 3,
+          "history_ratio": 0.6,
+          "event_type_accuracy": 0.0,
+          "property_accuracy": {
+            "location": {
+              "correct": 2,
+              "scored": 3,
+              "accuracy": 0.667
+            },
+            "product_type": {
+              "correct": 0,
+              "scored": 3,
+              "accuracy": 0.0
+            },
+            "service_type": {
+              "correct": 3,
+              "scored": 3,
+              "accuracy": 1.0
+            }
+          },
+          "timestamp_error": {
+            "mean_ms": 360000.0,
+            "median_ms": 360000.0
+          },
+          "uncertainty": {
+            "mean_event_confidence": 0.75,
+            "mean_property_confidence": 0.923
+          },
+          "headline": "held-out quality: 0% event-type, 67% location, median timestamp error 360s"
+        }
+      },
+      "predictions": [
+        {
+          "step": 1,
+          "event_type": "order_delivered",
+          "expected_ts": "2026-06-03T09:54:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "product_type": {
+              "value": "grocery",
+              "confidence": 0.69,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.759,
+              "why": "property distribution for order_picked_up->order_delivered"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_picked_up",
+            "interval_ms": 720000
+          }
+        },
+        {
+          "step": 2,
+          "event_type": "order_created",
+          "expected_ts": "2026-06-03T10:00:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.824,
+              "why": "property distribution for order_delivered->order_created"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for order_delivered->order_created"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.55,
+              "why": "property distribution for order_delivered->order_created"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_delivered",
+            "interval_ms": 360000
+          }
+        },
+        {
+          "step": 3,
+          "event_type": "driver_assigned",
+          "expected_ts": "2026-06-03T10:04:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.556,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.824,
+              "why": "property distribution for order_created->driver_assigned"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_created",
+            "interval_ms": 240000
+          }
+        },
+        {
+          "step": 4,
+          "event_type": "order_picked_up",
+          "expected_ts": "2026-06-03T10:12:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "product_type": {
+              "value": "food",
+              "confidence": 0.556,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.804,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 1.0,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            }
+          },
+          "why": {
+            "event_type": "transition from driver_assigned",
+            "interval_ms": 480000
+          }
+        }
+      ],
+      "drift_markers": [
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted 75% toward food"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted -75% toward grocery"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted 17% toward indiranagar"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted -17% toward koramangala"
+        }
+      ],
+      "alerts": {
+        "profile": "quiet",
+        "alerts": [
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted 75% toward food",
+            "window": "observed",
+            "value": "food",
+            "metric": 0.75
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted -75% toward grocery",
+            "window": "observed",
+            "value": "grocery",
+            "metric": -0.75
+          },
+          {
+            "kind": "cooling_zone_collapse",
+            "severity": "info",
+            "reason": "koramangala cooling -17% in observed window",
+            "window": "observed",
+            "value": "koramangala",
+            "metric": -0.167
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "info",
+            "reason": "indiranagar heating up 17% in observed window",
+            "window": "observed",
+            "value": "indiranagar",
+            "metric": 0.167
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "window_start": "2026-06-03T09:30:00Z",
+      "window_end": "2026-06-03T10:00:00Z",
+      "observed_event_count": 4,
+      "history_event_count": 9,
+      "heatmap": {
+        "bucket_field": "location",
+        "window_minutes": 30,
+        "horizon": 4,
+        "rows": [
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T09:30:00Z",
+            "observed_count": 2,
+            "predicted_count": 0,
+            "delta": -2,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T09:30:00Z",
+            "observed_count": 1,
+            "predicted_count": 0,
+            "delta": -1,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 0,
+            "predicted_count": 2,
+            "delta": 2,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 0,
+            "predicted_count": 1,
+            "delta": 1,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "whitefield",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 1,
+            "predicted_count": 0,
+            "delta": -1,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T10:30:00Z",
+            "observed_count": 0,
+            "predicted_count": 1,
+            "delta": 1,
+            "mean_confidence": 1.0
+          }
+        ],
+        "hot_buckets": [
+          {
+            "bucket": "koramangala",
+            "observed_total": 1,
+            "predicted_total": 2,
+            "delta": 1
+          }
+        ],
+        "cooling_buckets": [
+          {
+            "bucket": "whitefield",
+            "observed_total": 1,
+            "predicted_total": 0,
+            "delta": -1
+          }
+        ],
+        "locations": {
+          "indiranagar": {
+            "bucket": "indiranagar",
+            "label": "indiranagar",
+            "lat": 12.9719,
+            "lng": 77.6412,
+            "source": "catalog"
+          },
+          "koramangala": {
+            "bucket": "koramangala",
+            "label": "koramangala",
+            "lat": 12.9352,
+            "lng": 77.6245,
+            "source": "catalog"
+          },
+          "whitefield": {
+            "bucket": "whitefield",
+            "label": "whitefield",
+            "lat": 12.9698,
+            "lng": 77.75,
+            "source": "catalog"
+          }
+        }
+      },
+      "decision": {
+        "horizon": 4,
+        "narrative": "current window holds 5 events vs 4 events in the prior window; whitefield is heating up (+20%); indiranagar is cooling (-10%); service mix shifting toward delivery; next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix; held-out quality: 100% event-type, 75% location, median timestamp error 0s",
+        "previous_window": {
+          "start": "2026-06-03T09:00:00Z",
+          "end": "2026-06-03T09:24:00Z",
+          "event_count": 4
+        },
+        "current_window": {
+          "start": "2026-06-03T09:30:00Z",
+          "end": "2026-06-03T10:00:00Z",
+          "event_count": 5
+        },
+        "hot_zones": [
+          {
+            "field": "location",
+            "value": "whitefield",
+            "previous_share": 0.0,
+            "current_share": 0.2,
+            "delta": 0.2
+          }
+        ],
+        "cooling_zones": [
+          {
+            "field": "location",
+            "value": "indiranagar",
+            "previous_share": 0.5,
+            "current_share": 0.4,
+            "delta": -0.1
+          },
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.5,
+            "current_share": 0.4,
+            "delta": -0.1
+          }
+        ],
+        "mix_shifts": [
+          {
+            "field": "product_type",
+            "value": "grocery",
+            "previous_share": 1.0,
+            "current_share": 0.0,
+            "delta": -1.0
+          },
+          {
+            "field": "product_type",
+            "value": "food",
+            "previous_share": 0.0,
+            "current_share": 0.8,
+            "delta": 0.8
+          },
+          {
+            "field": "location",
+            "value": "whitefield",
+            "previous_share": 0.0,
+            "current_share": 0.2,
+            "delta": 0.2
+          },
+          {
+            "field": "service_type",
+            "value": "delivery",
+            "previous_share": 1.0,
+            "current_share": 0.8,
+            "delta": -0.2
+          },
+          {
+            "field": "service_type",
+            "value": "pickup",
+            "previous_share": 0.0,
+            "current_share": 0.2,
+            "delta": 0.2
+          },
+          {
+            "field": "product_type",
+            "value": "pharmacy",
+            "previous_share": 0.0,
+            "current_share": 0.2,
+            "delta": 0.2
+          },
+          {
+            "field": "location",
+            "value": "indiranagar",
+            "previous_share": 0.5,
+            "current_share": 0.4,
+            "delta": -0.1
+          },
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.5,
+            "current_share": 0.4,
+            "delta": -0.1
+          }
+        ],
+        "forecast_headline": "next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix",
+        "low_confidence_steps": [],
+        "forecast_quality": {
+          "history_count": 5,
+          "future_count": 4,
+          "history_ratio": 0.6,
+          "event_type_accuracy": 1.0,
+          "property_accuracy": {
+            "location": {
+              "correct": 3,
+              "scored": 4,
+              "accuracy": 0.75
+            },
+            "product_type": {
+              "correct": 0,
+              "scored": 4,
+              "accuracy": 0.0
+            },
+            "service_type": {
+              "correct": 3,
+              "scored": 4,
+              "accuracy": 0.75
+            }
+          },
+          "timestamp_error": {
+            "mean_ms": 0.0,
+            "median_ms": 0.0
+          },
+          "uncertainty": {
+            "mean_event_confidence": 1.0,
+            "mean_property_confidence": 0.871
+          },
+          "headline": "held-out quality: 100% event-type, 75% location, median timestamp error 0s"
+        }
+      },
+      "predictions": [
+        {
+          "step": 1,
+          "event_type": "driver_assigned",
+          "expected_ts": "2026-06-03T10:04:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.976,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.878,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.488,
+              "why": "property distribution for order_created->driver_assigned"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_created",
+            "interval_ms": 240000
+          }
+        },
+        {
+          "step": 2,
+          "event_type": "order_picked_up",
+          "expected_ts": "2026-06-03T10:12:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.792,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.547,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.938,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            }
+          },
+          "why": {
+            "event_type": "transition from driver_assigned",
+            "interval_ms": 480000
+          }
+        },
+        {
+          "step": 3,
+          "event_type": "order_delivered",
+          "expected_ts": "2026-06-03T10:24:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.792,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.938,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.547,
+              "why": "property distribution for order_picked_up->order_delivered"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_picked_up",
+            "interval_ms": 720000
+          }
+        },
+        {
+          "step": 4,
+          "event_type": "order_created",
+          "expected_ts": "2026-06-03T10:30:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "product_type": {
+              "value": "food",
+              "confidence": 0.5,
+              "why": "property distribution for order_delivered->order_created"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.714,
+              "why": "property distribution for order_delivered->order_created"
+            },
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.483,
+              "why": "property distribution for order_delivered->order_created"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_delivered",
+            "interval_ms": 360000
+          }
+        }
+      ],
+      "drift_markers": [
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted -100% toward grocery"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted 80% toward food"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted 20% toward whitefield"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "service_type share shifted -20% toward delivery"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "service_type share shifted 20% toward pickup"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted 20% toward pharmacy"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted -10% toward indiranagar"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted -10% toward koramangala"
+        }
+      ],
+      "alerts": {
+        "profile": "quiet",
+        "alerts": [
+          {
+            "kind": "hot_zone_growth",
+            "severity": "warning",
+            "reason": "predicted demand for koramangala exceeds observed by 1 events",
+            "window": "predicted",
+            "value": "koramangala",
+            "metric": 1.0
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted -100% toward grocery",
+            "window": "observed",
+            "value": "grocery",
+            "metric": -1.0
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted 80% toward food",
+            "window": "observed",
+            "value": "food",
+            "metric": 0.8
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "info",
+            "reason": "whitefield heating up 20% in observed window",
+            "window": "observed",
+            "value": "whitefield",
+            "metric": 0.2
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "info",
+            "reason": "service_type share shifted -20% toward delivery",
+            "window": "observed",
+            "value": "delivery",
+            "metric": -0.2
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "info",
+            "reason": "service_type share shifted 20% toward pickup",
+            "window": "observed",
+            "value": "pickup",
+            "metric": 0.2
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "info",
+            "reason": "product_type share shifted 20% toward pharmacy",
+            "window": "observed",
+            "value": "pharmacy",
+            "metric": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "window_start": "2026-06-03T09:45:00Z",
+      "window_end": "2026-06-03T10:15:00Z",
+      "observed_event_count": 3,
+      "history_event_count": 10,
+      "heatmap": {
+        "bucket_field": "location",
+        "window_minutes": 30,
+        "horizon": 4,
+        "rows": [
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T09:30:00Z",
+            "observed_count": 1,
+            "predicted_count": 0,
+            "delta": -1,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 0,
+            "predicted_count": 1,
+            "delta": 1,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 0,
+            "predicted_count": 2,
+            "delta": 2,
+            "mean_confidence": 0.484
+          },
+          {
+            "bucket": "whitefield",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 2,
+            "predicted_count": 0,
+            "delta": -2,
+            "mean_confidence": 0.0
+          },
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T10:30:00Z",
+            "observed_count": 0,
+            "predicted_count": 1,
+            "delta": 1,
+            "mean_confidence": 1.0
+          }
+        ],
+        "hot_buckets": [
+          {
+            "bucket": "koramangala",
+            "observed_total": 0,
+            "predicted_total": 2,
+            "delta": 2
+          },
+          {
+            "bucket": "indiranagar",
+            "observed_total": 1,
+            "predicted_total": 2,
+            "delta": 1
+          }
+        ],
+        "cooling_buckets": [
+          {
+            "bucket": "whitefield",
+            "observed_total": 2,
+            "predicted_total": 0,
+            "delta": -2
+          }
+        ],
+        "locations": {
+          "indiranagar": {
+            "bucket": "indiranagar",
+            "label": "indiranagar",
+            "lat": 12.9719,
+            "lng": 77.6412,
+            "source": "catalog"
+          },
+          "koramangala": {
+            "bucket": "koramangala",
+            "label": "koramangala",
+            "lat": 12.9352,
+            "lng": 77.6245,
+            "source": "catalog"
+          },
+          "whitefield": {
+            "bucket": "whitefield",
+            "label": "whitefield",
+            "lat": 12.9698,
+            "lng": 77.75,
+            "source": "catalog"
+          }
+        }
+      },
+      "decision": {
+        "horizon": 4,
+        "narrative": "current window holds 5 events vs 5 events in the prior window; whitefield is heating up (+40%); koramangala is cooling (-40%); service mix shifting toward delivery; next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix; 1 step below 0.5 confidence; held-out quality: 75% event-type, 50% location, median timestamp error 0s",
+        "previous_window": {
+          "start": "2026-06-03T09:00:00Z",
+          "end": "2026-06-03T09:30:00Z",
+          "event_count": 5
+        },
+        "current_window": {
+          "start": "2026-06-03T09:34:00Z",
+          "end": "2026-06-03T10:06:00Z",
+          "event_count": 5
+        },
+        "hot_zones": [
+          {
+            "field": "location",
+            "value": "whitefield",
+            "previous_share": 0.0,
+            "current_share": 0.4,
+            "delta": 0.4
+          }
+        ],
+        "cooling_zones": [
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.6,
+            "current_share": 0.2,
+            "delta": -0.4
+          }
+        ],
+        "mix_shifts": [
+          {
+            "field": "product_type",
+            "value": "grocery",
+            "previous_share": 0.8,
+            "current_share": 0.0,
+            "delta": -0.8
+          },
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.6,
+            "current_share": 0.2,
+            "delta": -0.4
+          },
+          {
+            "field": "location",
+            "value": "whitefield",
+            "previous_share": 0.0,
+            "current_share": 0.4,
+            "delta": 0.4
+          },
+          {
+            "field": "service_type",
+            "value": "delivery",
+            "previous_share": 1.0,
+            "current_share": 0.6,
+            "delta": -0.4
+          },
+          {
+            "field": "service_type",
+            "value": "pickup",
+            "previous_share": 0.0,
+            "current_share": 0.4,
+            "delta": 0.4
+          },
+          {
+            "field": "product_type",
+            "value": "food",
+            "previous_share": 0.2,
+            "current_share": 0.6,
+            "delta": 0.4
+          },
+          {
+            "field": "product_type",
+            "value": "pharmacy",
+            "previous_share": 0.0,
+            "current_share": 0.4,
+            "delta": 0.4
+          }
+        ],
+        "forecast_headline": "next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix",
+        "low_confidence_steps": [
+          {
+            "step": 1,
+            "event_type": "order_created",
+            "confidence": 0.3
+          }
+        ],
+        "forecast_quality": {
+          "history_count": 6,
+          "future_count": 4,
+          "history_ratio": 0.6,
+          "event_type_accuracy": 0.75,
+          "property_accuracy": {
+            "service_type": {
+              "correct": 2,
+              "scored": 4,
+              "accuracy": 0.5
+            },
+            "product_type": {
+              "correct": 0,
+              "scored": 4,
+              "accuracy": 0.0
+            },
+            "location": {
+              "correct": 2,
+              "scored": 4,
+              "accuracy": 0.5
+            }
+          },
+          "timestamp_error": {
+            "mean_ms": 30000.0,
+            "median_ms": 0.0
+          },
+          "uncertainty": {
+            "mean_event_confidence": 1.0,
+            "mean_property_confidence": 0.823
+          },
+          "headline": "held-out quality: 75% event-type, 50% location, median timestamp error 0s"
+        }
+      },
+      "predictions": [
+        {
+          "step": 1,
+          "event_type": "order_created",
+          "expected_ts": "2026-06-03T10:12:00Z",
+          "confidence": 0.3,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.643,
+              "why": "distribution for order_created"
+            },
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.5,
+              "why": "distribution for order_created"
+            },
+            "product_type": {
+              "value": "pharmacy",
+              "confidence": 0.357,
+              "why": "distribution for order_created"
+            }
+          },
+          "why": {
+            "event_type": "global event frequency fallback",
+            "interval_ms": 360000
+          }
+        },
+        {
+          "step": 2,
+          "event_type": "driver_assigned",
+          "expected_ts": "2026-06-03T10:16:00Z",
+          "confidence": 0.667,
+          "properties": {
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.778,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.924,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.444,
+              "why": "property distribution for order_created->driver_assigned"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_created",
+            "interval_ms": 240000
+          }
+        },
+        {
+          "step": 3,
+          "event_type": "order_picked_up",
+          "expected_ts": "2026-06-03T10:24:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.924,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.537,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.778,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            }
+          },
+          "why": {
+            "event_type": "transition from driver_assigned",
+            "interval_ms": 480000
+          }
+        },
+        {
+          "step": 4,
+          "event_type": "order_delivered",
+          "expected_ts": "2026-06-03T10:36:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.778,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.924,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.537,
+              "why": "property distribution for order_picked_up->order_delivered"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_picked_up",
+            "interval_ms": 720000
+          }
+        }
+      ],
+      "drift_markers": [
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted -80% toward grocery"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted -40% toward koramangala"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted 40% toward whitefield"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "service_type share shifted -40% toward delivery"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "service_type share shifted 40% toward pickup"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted 40% toward food"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted 40% toward pharmacy"
+        },
+        {
+          "kind": "confidence_drop",
+          "reason": "mean confidence fell from 100% to 74%"
+        }
+      ],
+      "alerts": {
+        "profile": "quiet",
+        "alerts": [
+          {
+            "kind": "cooling_zone_collapse",
+            "severity": "warning",
+            "reason": "koramangala cooling -40% in observed window",
+            "window": "observed",
+            "value": "koramangala",
+            "metric": -0.4
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "warning",
+            "reason": "whitefield heating up 40% in observed window",
+            "window": "observed",
+            "value": "whitefield",
+            "metric": 0.4
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "warning",
+            "reason": "predicted demand for koramangala exceeds observed by 2 events",
+            "window": "predicted",
+            "value": "koramangala",
+            "metric": 2.0
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "warning",
+            "reason": "predicted demand for indiranagar exceeds observed by 1 events",
+            "window": "predicted",
+            "value": "indiranagar",
+            "metric": 1.0
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted -80% toward grocery",
+            "window": "observed",
+            "value": "grocery",
+            "metric": -0.8
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "service_type share shifted -40% toward delivery",
+            "window": "observed",
+            "value": "delivery",
+            "metric": -0.4
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "service_type share shifted 40% toward pickup",
+            "window": "observed",
+            "value": "pickup",
+            "metric": 0.4
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted 40% toward food",
+            "window": "observed",
+            "value": "food",
+            "metric": 0.4
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted 40% toward pharmacy",
+            "window": "observed",
+            "value": "pharmacy",
+            "metric": 0.4
+          },
+          {
+            "kind": "confidence_drop",
+            "severity": "info",
+            "reason": "step 1 (order_created) confidence 30% is below floor",
+            "window": "predicted",
+            "value": "order_created",
+            "metric": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "window_start": "2026-06-03T10:00:00Z",
+      "window_end": "2026-06-03T10:30:00Z",
+      "observed_event_count": 3,
+      "history_event_count": 12,
+      "heatmap": {
+        "bucket_field": "location",
+        "window_minutes": 30,
+        "horizon": 4,
+        "rows": [
+          {
+            "bucket": "whitefield",
+            "window_start": "2026-06-03T10:00:00Z",
+            "observed_count": 3,
+            "predicted_count": 1,
+            "delta": -2,
+            "mean_confidence": 0.25
+          },
+          {
+            "bucket": "indiranagar",
+            "window_start": "2026-06-03T10:30:00Z",
+            "observed_count": 0,
+            "predicted_count": 2,
+            "delta": 2,
+            "mean_confidence": 1.0
+          },
+          {
+            "bucket": "koramangala",
+            "window_start": "2026-06-03T10:30:00Z",
+            "observed_count": 0,
+            "predicted_count": 1,
+            "delta": 1,
+            "mean_confidence": 0.667
+          }
+        ],
+        "hot_buckets": [
+          {
+            "bucket": "indiranagar",
+            "observed_total": 0,
+            "predicted_total": 2,
+            "delta": 2
+          },
+          {
+            "bucket": "koramangala",
+            "observed_total": 0,
+            "predicted_total": 1,
+            "delta": 1
+          }
+        ],
+        "cooling_buckets": [
+          {
+            "bucket": "whitefield",
+            "observed_total": 3,
+            "predicted_total": 1,
+            "delta": -2
+          }
+        ],
+        "locations": {
+          "indiranagar": {
+            "bucket": "indiranagar",
+            "label": "indiranagar",
+            "lat": 12.9719,
+            "lng": 77.6412,
+            "source": "catalog"
+          },
+          "koramangala": {
+            "bucket": "koramangala",
+            "label": "koramangala",
+            "lat": 12.9352,
+            "lng": 77.6245,
+            "source": "catalog"
+          },
+          "whitefield": {
+            "bucket": "whitefield",
+            "label": "whitefield",
+            "lat": 12.9698,
+            "lng": 77.75,
+            "source": "catalog"
+          }
+        }
+      },
+      "decision": {
+        "horizon": 4,
+        "narrative": "current window holds 6 events vs 6 events in the prior window; whitefield is heating up (+67%); koramangala is cooling (-67%); service mix shifting toward delivery; next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix; 1 step below 0.5 confidence; held-out quality: 40% event-type, 20% location, median timestamp error 120s",
+        "previous_window": {
+          "start": "2026-06-03T09:00:00Z",
+          "end": "2026-06-03T09:34:00Z",
+          "event_count": 6
+        },
+        "current_window": {
+          "start": "2026-06-03T09:42:00Z",
+          "end": "2026-06-03T10:20:00Z",
+          "event_count": 6
+        },
+        "hot_zones": [
+          {
+            "field": "location",
+            "value": "whitefield",
+            "previous_share": 0.0,
+            "current_share": 0.667,
+            "delta": 0.667
+          }
+        ],
+        "cooling_zones": [
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.667,
+            "current_share": 0.0,
+            "delta": -0.667
+          }
+        ],
+        "mix_shifts": [
+          {
+            "field": "location",
+            "value": "koramangala",
+            "previous_share": 0.667,
+            "current_share": 0.0,
+            "delta": -0.667
+          },
+          {
+            "field": "location",
+            "value": "whitefield",
+            "previous_share": 0.0,
+            "current_share": 0.667,
+            "delta": 0.667
+          },
+          {
+            "field": "service_type",
+            "value": "delivery",
+            "previous_share": 1.0,
+            "current_share": 0.333,
+            "delta": -0.667
+          },
+          {
+            "field": "service_type",
+            "value": "pickup",
+            "previous_share": 0.0,
+            "current_share": 0.667,
+            "delta": 0.667
+          },
+          {
+            "field": "product_type",
+            "value": "grocery",
+            "previous_share": 0.667,
+            "current_share": 0.0,
+            "delta": -0.667
+          },
+          {
+            "field": "product_type",
+            "value": "pharmacy",
+            "previous_share": 0.0,
+            "current_share": 0.667,
+            "delta": 0.667
+          }
+        ],
+        "forecast_headline": "next 4 steps lean toward driver_assigned (25%) centered on indiranagar, delivery mix",
+        "low_confidence_steps": [
+          {
+            "step": 1,
+            "event_type": "order_created",
+            "confidence": 0.25
+          }
+        ],
+        "forecast_quality": {
+          "history_count": 7,
+          "future_count": 5,
+          "history_ratio": 0.6,
+          "event_type_accuracy": 0.4,
+          "property_accuracy": {
+            "service_type": {
+              "correct": 1,
+              "scored": 5,
+              "accuracy": 0.2
+            },
+            "product_type": {
+              "correct": 0,
+              "scored": 5,
+              "accuracy": 0.0
+            },
+            "location": {
+              "correct": 1,
+              "scored": 5,
+              "accuracy": 0.2
+            }
+          },
+          "timestamp_error": {
+            "mean_ms": 120000.0,
+            "median_ms": 120000.0
+          },
+          "uncertainty": {
+            "mean_event_confidence": 1.0,
+            "mean_property_confidence": 0.801
+          },
+          "headline": "held-out quality: 40% event-type, 20% location, median timestamp error 120s"
+        }
+      },
+      "predictions": [
+        {
+          "step": 1,
+          "event_type": "order_created",
+          "expected_ts": "2026-06-03T10:26:00Z",
+          "confidence": 0.25,
+          "properties": {
+            "product_type": {
+              "value": "pharmacy",
+              "confidence": 0.5,
+              "why": "distribution for order_created"
+            },
+            "location": {
+              "value": "whitefield",
+              "confidence": 0.5,
+              "why": "distribution for order_created"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.5,
+              "why": "distribution for order_created"
+            }
+          },
+          "why": {
+            "event_type": "global event frequency fallback",
+            "interval_ms": 360000
+          }
+        },
+        {
+          "step": 2,
+          "event_type": "driver_assigned",
+          "expected_ts": "2026-06-03T10:30:00Z",
+          "confidence": 0.667,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.897,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.377,
+              "why": "property distribution for order_created->driver_assigned"
+            },
+            "location": {
+              "value": "koramangala",
+              "confidence": 0.679,
+              "why": "property distribution for order_created->driver_assigned"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_created",
+            "interval_ms": 240000
+          }
+        },
+        {
+          "step": 3,
+          "event_type": "order_picked_up",
+          "expected_ts": "2026-06-03T10:38:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.897,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.75,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.518,
+              "why": "property distribution for driver_assigned->order_picked_up"
+            }
+          },
+          "why": {
+            "event_type": "transition from driver_assigned",
+            "interval_ms": 480000
+          }
+        },
+        {
+          "step": 4,
+          "event_type": "order_delivered",
+          "expected_ts": "2026-06-03T10:50:00Z",
+          "confidence": 1.0,
+          "properties": {
+            "location": {
+              "value": "indiranagar",
+              "confidence": 0.75,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "product_type": {
+              "value": "food",
+              "confidence": 0.518,
+              "why": "property distribution for order_picked_up->order_delivered"
+            },
+            "service_type": {
+              "value": "delivery",
+              "confidence": 0.897,
+              "why": "property distribution for order_picked_up->order_delivered"
+            }
+          },
+          "why": {
+            "event_type": "transition from order_picked_up",
+            "interval_ms": 720000
+          }
+        }
+      ],
+      "drift_markers": [
+        {
+          "kind": "hot_zone_move",
+          "reason": "predicted hot zone moved from koramangala to indiranagar"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted -67% toward koramangala"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "location share shifted 67% toward whitefield"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "service_type share shifted -67% toward delivery"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "service_type share shifted 67% toward pickup"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted -67% toward grocery"
+        },
+        {
+          "kind": "mix_shift",
+          "reason": "product_type share shifted 67% toward pharmacy"
+        }
+      ],
+      "alerts": {
+        "profile": "quiet",
+        "alerts": [
+          {
+            "kind": "cooling_zone_collapse",
+            "severity": "warning",
+            "reason": "koramangala cooling -67% in observed window",
+            "window": "observed",
+            "value": "koramangala",
+            "metric": -0.667
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "warning",
+            "reason": "whitefield heating up 67% in observed window",
+            "window": "observed",
+            "value": "whitefield",
+            "metric": 0.667
+          },
+          {
+            "kind": "hot_zone_growth",
+            "severity": "warning",
+            "reason": "predicted demand for indiranagar exceeds observed by 2 events",
+            "window": "predicted",
+            "value": "indiranagar",
+            "metric": 2.0
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "service_type share shifted -67% toward delivery",
+            "window": "observed",
+            "value": "delivery",
+            "metric": -0.667
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "service_type share shifted 67% toward pickup",
+            "window": "observed",
+            "value": "pickup",
+            "metric": 0.667
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted -67% toward grocery",
+            "window": "observed",
+            "value": "grocery",
+            "metric": -0.667
+          },
+          {
+            "kind": "mix_shift",
+            "severity": "warning",
+            "reason": "product_type share shifted 67% toward pharmacy",
+            "window": "observed",
+            "value": "pharmacy",
+            "metric": 0.667
+          },
+          {
+            "kind": "confidence_drop",
+            "severity": "info",
+            "reason": "step 1 (order_created) confidence 25% is below floor",
+            "window": "predicted",
+            "value": "order_created",
+            "metric": 0.25
+          }
+        ]
+      }
+    }
+  ]
+}
