@@ -5,6 +5,8 @@ recommendation, the best method depends on the data regime, so *measure
 everything* and never trust a model that doesn't beat the dumb baseline on
 held-out data.
 
+**New here? Walk [TUTORIAL.md](TUTORIAL.md)** — a guided, run-it-in-order learning path.
+
 It grew as one continuous exploration, in three parts (kept as clean parallel
 subfolders — they share the *philosophy*, not the code: forecasting metrics ≠
 ranking metrics ≠ a Rust service):

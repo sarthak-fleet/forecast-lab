@@ -8,9 +8,8 @@ demand spikes. Isolates the exogenous lift: seasonal baseline → GBT(store+cale
 """
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import HistGradientBoostingRegressor
-
 from demand.eval import metrics
+from demand.gbt import gbt_fit_predict
 
 tr_all = pd.read_csv("data/rossmann/train.csv", parse_dates=["Date"], low_memory=False)
 store = pd.read_csv("data/rossmann/store.csv")
@@ -35,10 +34,7 @@ WX = BASE + ["Promo", "SchoolHoliday", "StateHolidayF"]
 
 
 def gbt(feats):
-    m = HistGradientBoostingRegressor(loss="poisson", max_iter=400, learning_rate=0.05,
-                                      l2_regularization=1.0, random_state=0)
-    m.fit(tr[feats], tr.Sales)
-    return np.clip(m.predict(te[feats]), 0, None)
+    return gbt_fit_predict(tr[feats], tr.Sales, te[feats], max_iter=400)
 
 
 print(f"Rossmann retail · {len(df)} open-day records · {df.Store.nunique()} stores · "

@@ -9,9 +9,8 @@ Isolates the exogenous lift on the M5 task (last 28 days held out):
 """
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import HistGradientBoostingRegressor
-
 from demand.eval import metrics
+from demand.gbt import gbt_fit_predict
 
 sales = pd.read_csv("data/m5/sales_train_evaluation.csv")
 sales = sales[(sales.store_id == "CA_1") & (sales.cat_id == "FOODS")]
@@ -45,10 +44,7 @@ WX = BASE + ["sell_price", "snap_CA", "event", "etype"]
 
 
 def gbt(f):
-    m = HistGradientBoostingRegressor(loss="poisson", max_iter=300, learning_rate=0.05,
-                                      l2_regularization=1.0, random_state=0)
-    m.fit(tr[f], tr.sales)
-    return np.clip(m.predict(te[f]), 0, None)
+    return gbt_fit_predict(tr[f], tr.sales, te[f], max_iter=300)
 
 
 print(f"M5 · store CA_1 · FOODS · {sales.shape[0]} items × {len(dcols)} days · "

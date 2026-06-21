@@ -8,9 +8,8 @@ step so you can SEE what each method/feature-set buys:
 """
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import HistGradientBoostingRegressor
-
 from demand.eval import metrics
+from demand.gbt import gbt_fit_predict
 
 df = pd.read_csv("data/bike/hour.csv").sort_values("instant").reset_index(drop=True)
 df["lag1"] = df.cnt.shift(1)        # last hour
@@ -27,10 +26,7 @@ WX = CAL + ["weathersit", "temp", "atemp", "hum", "windspeed"]
 
 
 def gbt(feats):
-    m = HistGradientBoostingRegressor(loss="poisson", max_iter=500, learning_rate=0.05,
-                                      l2_regularization=1.0, random_state=0)
-    m.fit(tr[feats], tr.cnt)
-    return np.clip(m.predict(te[feats]), 0, None)
+    return gbt_fit_predict(tr[feats], tr.cnt, te[feats], max_iter=500)
 
 
 rows = [

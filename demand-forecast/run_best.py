@@ -10,8 +10,8 @@ head-to-head vs the naive baselines on a 1-step-ahead backtest.
 """
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import HistGradientBoostingRegressor
 
+from demand.gbt import gbt_fit_predict
 from demand.olist import load_olist_orders
 from demand.clustering import cluster_by_profile
 from demand.eval import metrics
@@ -59,10 +59,7 @@ def main():
     for d in (tr, te):
         d[FE] = d[FE].fillna(glob)
 
-    gbt = HistGradientBoostingRegressor(loss="poisson", max_iter=600, learning_rate=0.05,
-                                        max_leaf_nodes=63, l2_regularization=1.0, random_state=0)
-    gbt.fit(tr[FE], tr.y)
-    pred = np.clip(gbt.predict(te[FE]), 0, None)
+    pred = gbt_fit_predict(tr[FE], tr.y, te[FE], max_iter=600, max_leaf_nodes=63)
     ens = 0.5 * pred + 0.5 * te.lag1.to_numpy()
 
     y = te.y.to_numpy()
