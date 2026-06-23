@@ -1,8 +1,11 @@
 # defense-in-depth (subfolders also have their own .gitignore)
 **/data/
+# sample-events.json is a small fixture needed for compilation
+!**/data/sample-events.json
 **/target/
 **/__pycache__/
 **/.DS_Store
 *.zip
 *.tgz
 *.parquet
+event-forecast/artifacts/
