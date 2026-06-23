@@ -668,12 +668,12 @@ sasrec = [
 
 [package.metadata]
 requires-dist = [
-    { name = "numpy" },
-    { name = "pandas" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "pytest-asyncio", marker = "extra == 'dev'" },
-    { name = "scipy" },
-    { name = "torch", marker = "extra == 'sasrec'" },
+    { name = "numpy", specifier = ">=1.24" },
+    { name = "pandas", specifier = ">=2.0" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
+    { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.21" },
+    { name = "scipy", specifier = ">=1.10" },
+    { name = "torch", marker = "extra == 'sasrec'", specifier = ">=2.0" },
 ]
 provides-extras = ["sasrec", "dev"]
 

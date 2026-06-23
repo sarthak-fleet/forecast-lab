@@ -4,18 +4,18 @@ version = "0.1.0"
 description = "Recommender systems learning lab — eval-first recsys experiments."
 requires-python = ">=3.11"
 dependencies = [
-    "numpy",
-    "scipy",
-    "pandas",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
 ]
 
 [project.optional-dependencies]
 sasrec = [
-    "torch",
+    "torch>=2.0",
 ]
 dev = [
-    "pytest",
-    "pytest-asyncio",
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
 ]
 
 [build-system]
