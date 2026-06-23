@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  event-forecast:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: event-forecast
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: event-forecast
+
+      - name: Test
+        run: cargo test --quiet
+
+  python-labs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lab: [demand-forecast, recsys-lab]
+    defaults:
+      run:
+        working-directory: ${{ matrix.lab }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Sync deps
+        run: uv sync --extra dev
+
+      - name: Test
+        run: uv run pytest -q
