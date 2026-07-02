@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "deploy": "node -e \"console.error('No production deployment is configured for forecast-lab; CI is the release gate for this lab repo.'); process.exit(1)\""
+  }
+}
