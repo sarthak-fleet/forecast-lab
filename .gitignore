@@ -9,3 +9,5 @@
 *.tgz
 *.parquet
 event-forecast/artifacts/
+web/node_modules/
+web/dist/

@@ -53,6 +53,7 @@ Three sub-projects share the philosophy, not the code:
 
 ## Timeline
 
+- **2026-07-03** — Added CSV upload web UI (`web/`) wrapping the method-ladder report: upload a time-series CSV → naive → seasonal-naive → moving average → Holt-Winters → ensemble, with held-out backtest metrics (MAE/RMSE/wMAPE/bias), forecast chart, metrics table, and CSV/JSON download. Vite + React 19 + Tailwind v4. Consulting wedge: if forecast-lab ever becomes more than a learning lab, this is the upload-your-CSV entry point.
 - **pre-2026-06-21** — sub-projects built in their own repos: event-forecast
   (Rust service, phases 1–5; 2026-06-20 eval found the baseline ties/loses to
   a majority-class guesser on real data), recsys-lab, demand-forecast.
