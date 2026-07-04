@@ -1,6 +1,13 @@
 # forecast-lab — PROJECT STATUS
 
-Last updated: 2026-07-03
+> **DELAYED 2026-07-04 — parked, not archived.**
+>
+> The eval-first ML learning lab is paused. The harness and lessons remain the
+> asset; no active forecasting or recsys work is in flight. Reopen trigger: a
+> concrete product or hiring need that benefits from honest held-out eval
+> benchmarks, or a return to systematic ML study.
+
+Last updated: 2026-07-04
 
 ## Why / What
 
