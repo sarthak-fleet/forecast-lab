@@ -1,0 +1,21 @@
+{
+  "$schema": "fleet.landing-audit.v1",
+  "project": "forecast-lab",
+  "priority": "P4",
+  "decision": "Hold",
+  "auditedAt": "2026-08-29",
+  "candidateUrl": null,
+  "productionUrl": null,
+  "releaseState": "No canonical deployment or public landing page exists. Forecast Lab is an out-of-fleet learning toolkit with an undeployed local React evaluation interface.",
+  "implementationAction": "not-applicable",
+  "migrationCandidate": false,
+  "gates": {
+    "contentPurpose": { "score": null, "status": "not-applicable", "evidence": "There is no public page to score. Pre-existing local edits already describe the interface as a parked private evaluation lab rather than a consulting service, and were preserved unchanged." },
+    "designQuality": { "score": null, "status": "not-applicable", "evidence": "The local research interface is not a public landing page and has no canonical URL." },
+    "seo": { "score": null, "status": "not-applicable", "evidence": "There is no canonical website to audit." },
+    "geo": { "score": null, "status": "not-applicable", "evidence": "There is no canonical website to audit." },
+    "performance": { "score": null, "status": "not-applicable", "evidence": "There is no canonical website to measure." }
+  },
+  "verification": { "passed": ["canonical deployment state checked", "local web surface and pre-existing dirty changes inspected and preserved"] },
+  "minimumObserved": null
+}
