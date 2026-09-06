@@ -23,3 +23,7 @@ ranking metrics ≠ a Rust service):
 method to the regime, and measure everything.**
 
 (Datasets are gitignored — re-fetch via each subfolder's run scripts.)
+
+## Models to consider
+
+- [google/timesfm-3.0-pytorch](https://huggingface.co/google/timesfm-3.0-pytorch) — considered for ML forecasting models (from issue #2)
