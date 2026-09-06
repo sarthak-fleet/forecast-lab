@@ -69,11 +69,12 @@ export default function App() {
         <div className="mx-auto max-w-5xl px-6 py-8">
           <div className="flex items-center gap-2 text-sm text-slate-300">
             <BarChart3 size={16} />
-            <span>forecast-lab</span>
+            <span>forecast-lab · parked learning artifact</span>
           </div>
-          <h1 className="mt-2 text-2xl font-bold sm:text-3xl">Method-ladder forecaster</h1>
+          <h1 className="mt-2 text-2xl font-bold sm:text-3xl">Measure which forecast method fits.</h1>
           <p className="mt-2 max-w-2xl text-slate-300">
-            Upload a time-series CSV. We run the method ladder — naive → seasonal-naive → moving
+            This private evaluation lab is for learning, not a consulting service or production
+            forecasting claim. Upload a time-series CSV to run the method ladder — naive → seasonal-naive → moving
             average → Holt-Winters → ensemble — on a held-out backtest, score each, and forecast
             the future. The lesson the lab teaches:{' '}
             <span className="font-medium text-white">
@@ -218,7 +219,7 @@ export default function App() {
       </main>
 
       <footer className="border-t border-slate-200 py-6 text-center text-xs text-slate-500">
-        forecast-lab · method-ladder forecaster · a consulting wedge from the eval-first ML lab.
+        forecast-lab · parked personal learning and evaluation artifact · no external service.
       </footer>
     </div>
   );

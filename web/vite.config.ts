@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // Fleet standard (VoidZero ecosystem): Vite + React SPA, Tailwind v4 via the
 // official @tailwindcss/vite plugin, Lightning CSS as the CSS transformer +
-// minifier. Reference: today-little-log.
+// minifier.
 export default defineConfig({
   server: { host: '::', port: 5173 },
   plugins: [react(), tailwindcss()],
