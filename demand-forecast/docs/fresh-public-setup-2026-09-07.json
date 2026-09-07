@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-09-07",
+  "sourceRevision": "15b7130f600811170ca94533d540e62f0f0b0324",
+  "sourceAcquisition": "Unauthenticated GitHub codeload archive, fresh extracted directory, no copied local data or virtualenv",
+  "setup": "uv sync --frozen --extra dev; fresh CPython3.11.16 virtualenv;17 packages installed from frozen lock",
+  "run": "uv run --frozen python run_bike.py",
+  "tests": "uv run --frozen pytest -q:7passed",
+  "validation": "Independently recomputed every wMAPE from all3406 predictions; matches reported four-decimal metrics within0.00005 absolute tolerance",
+  "outputHashes": {
+    "metrics.json": "193ec8181a3cf15cc3f181befc65f36f899f6945fa453ce248f78c1b5742f9b2",
+    "predictions.csv": "3a941ba66a1054d51f4c8b58135284c0df987c46c52bc9667f9503f540086d53"
+  },
+  "rights": "UCI dataset source page confirms CC BY4.0; public source repository has no LICENSE or GitHub licenseInfo. Source licensing decision pending.",
+  "limits": [
+    "one-hour learning experiment only",
+    "other historical datasets and tutorial percentages not qualified",
+    "no hosted/commercial forecasting service",
+    "source reuse license pending"
+  ],
+  "cleanup": "Temporary source, virtualenv, fetched dataset and generated outputs removed after retaining receipt; no running process."
+}

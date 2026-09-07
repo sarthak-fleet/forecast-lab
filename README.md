@@ -25,6 +25,10 @@ commerce-demand accuracy, multi-step forecast performance, or B2B readiness.
 The broader [TUTORIAL.md](TUTORIAL.md) describes historical experiments;
 its other datasets and numeric claims have not been requalified by this check.
 
+The documented bike commands also passed from a fresh, unauthenticated public
+source download on 2026-09-07. Source-code licensing is still undecided; the UCI
+dataset license does not license this repository's code.
+
 It grew as one continuous exploration, in three parts (kept as clean parallel
 subfolders — they share the *philosophy*, not the code: forecasting metrics ≠
 ranking metrics ≠ a Rust service):

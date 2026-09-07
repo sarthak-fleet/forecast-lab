@@ -77,6 +77,23 @@ model parameters and scores. `predictions.csv` contains every scored timestamp,
 actual count and method prediction so the metrics can be recomputed. Both files
 are local outputs and gitignored. `--output PATH` selects another output directory.
 
+## Fresh public setup — 2026-09-07
+
+An unauthenticated download of public commit `15b7130f` was extracted into a
+temporary directory without local data or an existing virtual environment.
+The three documented commands installed 17 packages, downloaded the pinned
+input, completed the full experiment and passed all seven tests. Both output
+hashes matched the earlier receipt above. Independently recomputing all five
+wMAPE values from 3,406 prediction rows matched their four-decimal reported
+values within 0.00005. The terminal table and output provenance were inspected.
+See [the fresh-setup receipt](fresh-public-setup-2026-09-07.json).
+
+The public source repository currently has no source-code license; that owner
+decision remains pending. The dataset's CC BY 4.0 license is separate. Fresh
+setup is now verified, but the source usage-rights gate has not been resolved.
+The temporary source, environment and downloaded dataset were cleaned after
+retaining this receipt.
+
 ## What remains unqualified
 
 Other datasets and historical tutorial percentages have not been rerun here.
