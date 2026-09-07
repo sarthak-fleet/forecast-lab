@@ -5,8 +5,12 @@ the lesson.** The reference docs are the *what* ([recsys roadmap](recsys-lab/doc
 [forecasting EXPLAINER](demand-forecast/docs/EXPLAINER.md)); this is the *order to
 walk it* and why each step matters.
 
-**Setup:** Python + numpy/pandas/scipy/scikit-learn (+ torch for SASRec). Datasets
-auto-download via the run scripts; nothing else to install.
+**Verified starting point:** use the frozen `uv` commands in [README.md](README.md)
+for the bike experiment. It downloads its licensed input automatically. Other
+historical scripts may require separately obtained datasets; the old numeric
+claims below are historical observations, not current reproducibility receipts.
+See [bike protocol](demand-forecast/docs/bike-reproducibility.md) for the corrected
+one-hour evaluation and the distinction between observed weather and forecast inputs.
 
 ## 0. The one idea (read first)
 

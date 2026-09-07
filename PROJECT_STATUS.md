@@ -7,7 +7,7 @@
 > concrete product or hiring need that benefits from honest held-out eval
 > benchmarks, or a return to systematic ML study.
 
-Last updated: 2026-07-04
+Last updated: 2026-09-07 (bounded reproducibility and task reconciliation)
 
 ## Why / What
 
@@ -50,8 +50,8 @@ Three sub-projects share the philosophy, not the code:
 - **event-forecast:** Rust + Rocket 0.5, sqlx, TimescaleDB/PostgreSQL via
   local Docker Compose (:54329), Leaflet single-file explorer UI. Full list
   in `event-forecast/PROJECT_STATUS.md`.
-- **Datasets:** gitignored; auto-downloaded by each lab's run scripts
-  (NYC taxi, Olist, bike-sharing, Rossmann, M5, MovieLens-1M).
+- **Datasets:** gitignored. The corrected bike runner fetches a pinned licensed
+  UCI input; other historical experiments may need separately obtained datasets.
 
 ### Internal (fleet)
 - None at runtime. Fleet standards (AGENTS.md at fleet root) govern process.
@@ -73,7 +73,7 @@ Three sub-projects share the philosophy, not the code:
 ## Products
 
 - **No production deployments.** Everything runs locally.
-- **GitHub repo:** `sarthak-fleet/forecast-lab` (private), CI on GitHub
+- **GitHub repo:** `sarthakagrawal927/forecast-lab` (public), CI on GitHub
   Actions (`.github/workflows/ci.yml`): `cargo test` for event-forecast +
   pytest matrix for the Python labs.
 - **Local surfaces:**
@@ -151,3 +151,17 @@ Three sub-projects share the philosophy, not the code:
 ### Blocked
 - event-forecast accuracy validation blocked on a larger real stream
   (sample is 14 events / 4 entities — fixture/demo quality only).
+
+## Reproducibility and task reconciliation — 2026-09-07
+
+The existing hourly bike experiment now fetches checksum-pinned CC BY 4.0 input,
+uses timestamp-aligned lags and a chronological held-out evaluation, and labels
+observed target-hour weather as an oracle. Two local runs produced byte-identical
+metrics and predictions. Seven protocol/metric tests passed. See the
+[measured receipt](demand-forecast/docs/bike-reproducibility.md) and
+[repair #4](https://github.com/sarthakagrawal927/forecast-lab/issues/4).
+
+The planned/deferred/blocked items above are preserved in
+[#5](https://github.com/sarthakagrawal927/forecast-lab/issues/5) and summarized in
+the README. They are not complete and the portfolio hold has not been lifted.
+Historical dataset scores above have not all been requalified by the bike run.

@@ -39,11 +39,20 @@ forecaster depends on the data regime (naive wins dense/stationary; pooling wins
 sparse; **exogenous signal wins decisively where it exists — bike +50%**; trends need
 Holt/log; accuracy is a granularity dial).
 
-**Start at [`docs/EXPLAINER.md`](docs/EXPLAINER.md)** for the full matrix + run commands;
+The historical matrix and headline percentages above are not a fresh forecast
+accuracy guarantee. The corrected, reproducible bike entry point uses exact
+hourly lags and labels target-hour observed weather as an oracle. Its
+[protocol and measured receipt](docs/bike-reproducibility.md) supersede older
+bike headline comparisons.
+
+See [`docs/EXPLAINER.md`](docs/EXPLAINER.md) for the historical matrix + run commands;
 [`docs/lessons.md`](docs/lessons.md) is the detailed findings log.
 
 ## Run
 
 ```bash
-cd demand-forecast && python3 run_bike.py   # e.g. exogenous-signal regime; see EXPLAINER for all
+cd demand-forecast
+uv sync --frozen --extra dev
+uv run --frozen python run_bike.py
+uv run --frozen pytest -q
 ```

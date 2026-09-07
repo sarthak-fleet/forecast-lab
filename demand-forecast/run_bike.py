@@ -1,48 +1,86 @@
-"""Explainer cell: Bike-Sharing (hourly demand WITH weather + calendar).
+"""Reproducible one-hour rolling-origin evaluation on UCI Bike Sharing.
 
-The regime Olist/taxi lacked — real exogenous signal. Isolates the lift at each
-step so you can SEE what each method/feature-set buys:
-  naive → seasonal-naive → GBT(calendar) → GBT(calendar+weather)
-
-  cd demand-forecast && python3 run_bike.py
+Run: uv run --frozen python run_bike.py
+Actual prior-hour demand is observed before each prediction; the models are fit
+once before the held-out tail. Observed target-hour weather is an oracle
+comparison, not a deployable weather forecast.
 """
+import argparse
+import json
+from pathlib import Path
+
 import numpy as np
-import pandas as pd
+from threadpoolctl import threadpool_limits
+
+from demand.bike import HOUR_SHA256, SOURCE, load_bike, temporal_split
 from demand.eval import metrics
 from demand.gbt import gbt_fit_predict
-
-df = pd.read_csv("data/bike/hour.csv").sort_values("instant").reset_index(drop=True)
-df["lag1"] = df.cnt.shift(1)        # last hour
-df["lag24"] = df.cnt.shift(24)      # same hour yesterday
-df["lag168"] = df.cnt.shift(168)    # same hour last week
-
-cut = int(len(df) * 0.8)            # temporal backtest: last 20% held out
-tr = df.iloc[:cut].dropna(subset=["lag1", "lag24", "lag168"]).copy()
-te = df.iloc[cut:].copy()
-y = te.cnt.to_numpy()
 
 CAL = ["season", "yr", "mnth", "hr", "holiday", "weekday", "workingday", "lag24", "lag168"]
 WX = CAL + ["weathersit", "temp", "atemp", "hum", "windspeed"]
 
 
-def gbt(feats):
-    return gbt_fit_predict(tr[feats], tr.cnt, te[feats], max_iter=500)
+def evaluate(frame, max_iter=500):
+    frame, train, test, cut = temporal_split(frame)
+    predictions = {
+        "Persistence (previous hour)": test.lag1.to_numpy(),
+        "Seasonal naive (24 hours)": test.lag24.to_numpy(),
+        "Seasonal naive (168 hours)": test.lag168.to_numpy(),
+    }
+    # Bound CPU use and numerical scheduling; all fitting stays before cutoff.
+    with threadpool_limits(limits=1):
+        for name, features in [("GBT (calendar + past demand)", CAL),
+                               ("GBT (+ observed weather ORACLE)", WX)]:
+            predictions[name] = gbt_fit_predict(
+                train[features], train.cnt, test[features], max_iter=max_iter,
+            )
+    y = test.cnt.to_numpy()
+    scored = {name: metrics(y, prediction) for name, prediction in predictions.items()}
+    report = {
+        "dataset": "UCI Bike Sharing, hourly 2011-2012",
+        "source": SOURCE,
+        "citation": "Fanaee-T, H. (2013). Bike Sharing. doi:10.24432/C5W894",
+        "license": "CC BY 4.0",
+        "hour_csv_sha256": HOUR_SHA256,
+        "protocol": "Fixed models, rolling one-hour predictions; past test observations available",
+        "weather_limit": "Target-hour observed weather is an oracle, not forecast-available input",
+        "split": {
+            "rows": len(frame), "cutoff": str(frame.iloc[cut].timestamp),
+            "train_rows": len(train), "test_rows": len(test),
+            "train_start": str(train.timestamp.min()), "train_end": str(train.timestamp.max()),
+            "test_start": str(test.timestamp.min()), "test_end": str(test.timestamp.max()),
+            "excluded_train_missing_lags": cut - len(train),
+            "excluded_test_missing_lags": len(frame) - cut - len(test),
+        },
+        "model": {"max_iter": max_iter, "random_state": 0, "threads": 1},
+        "metrics": scored,
+        "units": "MAE/RMSE/bias: rentals per hour; wMAPE: absolute error / actual total",
+    }
+    output = test[["timestamp", "cnt"]].rename(columns={"cnt": "actual"}).copy()
+    for name, prediction in predictions.items():
+        if not np.isfinite(prediction).all():
+            raise ValueError(f"Non-finite predictions: {name}")
+        output[name] = prediction
+    return report, output
 
 
-rows = [
-    ("Naive (lag-1 hour)", te.lag1.to_numpy()),
-    ("SeasonalNaive (lag-24, same hr yest.)", te.lag24.to_numpy()),
-    ("SeasonalNaive (lag-168, same hr last wk)", te.lag168.to_numpy()),
-    ("GBT (calendar only)", gbt(CAL)),
-    ("GBT (calendar + WEATHER)", gbt(WX)),
-]
-print(f"Bike-Sharing hourly demand · {len(df)} rows · last 20% held out · "
-      f"mean {y.mean():.0f}/hr\n")
-print(f"  {'method':42s}{'MAE':>8s}{'RMSE':>8s}{'wMAPE':>8s}")
-base = None
-for name, pred in rows:
-    m = metrics(y, pred)
-    if base is None:
-        base = m["wMAPE"]
-    tag = "" if name.startswith("Naive") else f"  ({(1 - m['wMAPE'] / base) * 100:+.0f}% vs naive)"
-    print(f"  {name:42s}{m['MAE']:8.1f}{m['RMSE']:8.1f}{m['wMAPE']:8.3f}{tag}")
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=Path(__file__).parent / "data" / "bike-evaluation")
+    args = parser.parse_args()
+    report, predictions = evaluate(load_bike())
+    args.output.mkdir(parents=True, exist_ok=True)
+    (args.output / "metrics.json").write_text(json.dumps(report, indent=2) + "\n")
+    predictions.to_csv(args.output / "predictions.csv", index=False)
+    print(f"Bike Sharing: {report['split']['test_rows']} scored held-out hours")
+    print(report["protocol"])
+    print(report["weather_limit"])
+    print(f"{'method':38s}{'MAE':>10s}{'RMSE':>10s}{'wMAPE':>10s}")
+    for name, score in report["metrics"].items():
+        print(f"{name:38s}{score['MAE']:10.3f}{score['RMSE']:10.3f}{score['wMAPE']:10.4f}")
+    print(f"Split, provenance and metrics: {args.output / 'metrics.json'}")
+    print(f"Actuals and predictions: {args.output / 'predictions.csv'}")
+
+
+if __name__ == "__main__":
+    main()
